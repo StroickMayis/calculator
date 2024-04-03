@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "xabikos.javascriptsnippets",
+        "github.copilot",
+        "visualstudioexptteam.vscodeintellicode",
+        "github.copilot-chat",
+        "mhutchie.git-graph",
+        "zignd.html-css-class-completion",
+        "oderwat.indent-rainbow",
+        "tabnine.tabnine-vscode",
+        "github.github-vscode-theme",
+        "sburg.vscode-javascript-booster",
+        "corygross.vscode-mdn-docs",
+        "deerawan.vscode-dash",
+        "wallabyjs.quokka-vscode"
+    ]
+}
