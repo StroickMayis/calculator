@@ -1,7 +1,5 @@
 /* 
 TODO : I think all that is left is to make the text fit the display screen. I need to figure out all of round and shit. Will probably have to ctrl+f and find all of the spots where I set the display, and fix it to the odin project's rounding and text wrapping specifications. One option for this too, is to just do it in the set display.. possibly???
-
-TODO : Also, I need make the buttons glow for the operators.
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
@@ -236,36 +234,60 @@ function queueNextOperator() {
 function highlightOperator(localOperator = null) {
     switch (localOperator) {
         case null:
+            addButton.style.color = null;
+            divideButton.style.color = null;
+            multiplyButton.style.color = null;
+            subtractButton.style.color = null;
             addButton.style.backgroundColor = null;
             divideButton.style.backgroundColor = null;
             multiplyButton.style.backgroundColor = null;
             subtractButton.style.backgroundColor = null;
         break;
         case "/":
-            divideButton.style.backgroundColor = `rgb(70,70,70)`;
+            divideButton.style.backgroundColor = `rgb(255,255,255)`;
+            divideButton.style.color = `rgb(255,159,10)`;
+
             addButton.style.backgroundColor = null;
+            addButton.style.color = null;
             multiplyButton.style.backgroundColor = null;
+            multiplyButton.style.color = null;
             subtractButton.style.backgroundColor = null;
+            subtractButton.style.color = null;
             
         break;
         case "*":
-            multiplyButton.style.backgroundColor = `rgb(70,70,70)`;
+            multiplyButton.style.backgroundColor = `rgb(255,255,255)`;
+            multiplyButton.style.color = `rgb(255,159,10)`;
+
             addButton.style.backgroundColor = null;
+            addButton.style.color = null;
             divideButton.style.backgroundColor = null;
+            divideButton.style.color = null;
             subtractButton.style.backgroundColor = null;
+            subtractButton.style.color = null;
             
         break;
         case "-":
-            subtractButton.style.backgroundColor = `rgb(70,70,70)`;
+            subtractButton.style.backgroundColor = `rgb(255,255,255)`;
+            subtractButton.style.color = `rgb(255,159,10)`;
+
             addButton.style.backgroundColor = null;
+            addButton.style.color = null;
             divideButton.style.backgroundColor = null;
+            divideButton.style.color = null;
             multiplyButton.style.backgroundColor = null;
+            multiplyButton.style.color = null;
         break;
         case "+":
-            addButton.style.backgroundColor = `rgb(70,70,70)`;
+            addButton.style.backgroundColor = `rgb(255,255,255)`;
+            addButton.style.color = `rgb(255,159,10)`;
+
             divideButton.style.backgroundColor = null;
+            divideButton.style.color = null;
             multiplyButton.style.backgroundColor = null;
+            multiplyButton.style.color = null;
             subtractButton.style.backgroundColor = null;
+            subtractButton.style.color = null;
         break;
     }
 }
@@ -319,7 +341,13 @@ percentButton.addEventListener(`click`, () => {
         equalsButton.dispatchEvent(clickEvent)
 });
 
+buttons.addEventListener("mousedown", (e) => 
+{
+    e.preventDefault();
+});
+
 buttons.addEventListener(`click`, (e) => {
+    
     switch (e.target.id) {
         case `oneButton`:
             input.push(1);
