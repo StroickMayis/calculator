@@ -1,5 +1,11 @@
 /* 
-TODO : I think all that is left is to make the text fit the display screen. I need to figure out all of round and shit. Will probably have to ctrl+f and find all of the spots where I set the display, and fix it to the odin project's rounding and text wrapping specifications. One option for this too, is to just do it in the set display.. possibly???
+TODO : FIX THE ZERO BUTTON
+
+TODO: NUM WITH NO OP MAKES UNDEFINED
+
+TODO : 9 / posOrNeg .  <--- reacts differently than iphone, misses the 0.
+
+!!! CHECK PHONE VIDS FOR SHIT
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
@@ -11,6 +17,7 @@ const oneButton = document.querySelector(`#oneButton`);
 const zeroButton = document.querySelector(`#zeroButton`);
 const equalsButton = document.querySelector(`#equalsButton`);
 const percentButton = document.querySelector(`#percentButton`);
+const clearButton = document.querySelector(`#clearButton`);
 let input = [];
 let operant = null;
 let result = null;
@@ -24,6 +31,10 @@ let posOrNegAfterOpSwitch = false;
 let previousClick = [];
 
 setDisplay(0);
+
+function expo(x, f) {
+    return Number.parseFloat(x).toExponential(f);
+}
 
 function calculate(operator, a, b) {
         switch (operator) {
@@ -70,7 +81,57 @@ function clearOperators() {
 }
 
 function setDisplay(x) {
-    display.textContent = `${x}`;
+    let indexCounter;
+    // *CONVERTS TO STRING
+    if (typeof x !== `string`) {
+        x = `${x}`;
+    }
+
+    // *CONVERTS TO EXPONENTIAL NOTATION IF TOO LONG
+    Number(x); // !!! Could cause issues with error mesages.
+    if (x.length > 9) {
+        x = expo(x, 3);
+    }
+
+    // *SPLICES IN COMMAS FOR BIG NUMBERS
+    x = x.split(``);
+    if (x.length > 3 && !x.includes(`e`)) {
+        if (x.includes(`.`)){
+            indexCounter = x.indexOf(`.`);
+            while (indexCounter > 3) {
+                indexCounter -= 3;
+                x.splice(indexCounter,0,`,`);
+            } 
+        } else {
+            indexCounter = x.length;
+            while (indexCounter > 3) {
+                indexCounter -= 3;
+                x.splice(indexCounter,0,`,`);
+            }
+        }   
+    }
+    // *CHANGES FONT SIZE FOR BIG NUMBERS
+    if (x.length > 6) {
+        switch (x.length) {
+            case 7:
+                display.style.fontSize = `13.5dvh`;
+            break;
+            case 8:
+                display.style.fontSize = `11.75dvh`;
+            break;
+            case 9:
+                display.style.fontSize = `10.5dvh`;
+            break;
+            default:
+                display.style.fontSize = `9dvh`;
+            break;
+        }
+    } else {
+        display.style.fontSize = `15dvh`;
+    }
+    //* DISPLAYS TEXT
+    display.textContent = `${x.join(``)}`;
+    dotIndex = null;
 }
 
 function runEqualsLogic() {
@@ -416,9 +477,9 @@ buttons.addEventListener(`click`, (e) => {
         clearCalculator();
     } else {
         updatePreviousClick(e.target);
-        console.log(`PREVIOUS CLICK : ${previousClick[0]}`);
-        console.log(` --- BUTTON CLICKED ---> ${e.target.id}`);
-        logAllVars(true);
+        // console.log(`PREVIOUS CLICK : ${previousClick[0]}`);
+        // console.log(` --- BUTTON CLICKED ---> ${e.target.id}`);
+        // logAllVars(true);
         checkPosOrNeg();
         if (e.target.className.includes(`num`)) {
             runNumberClickLogic();
@@ -431,7 +492,12 @@ buttons.addEventListener(`click`, (e) => {
         if (!display.textContent) {
             setDisplay(0);
         }
-        logAllVars(false);
-        
+        // logAllVars(false); 
+    }
+    if (input.length > 0 || result || operator) {
+        console.log(input.length);
+        clearButton.textContent = `C`;
+    } else {
+        clearButton.textContent = `AC`;
     }
 });

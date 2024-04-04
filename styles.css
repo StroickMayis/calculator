@@ -35,14 +35,23 @@ body {
     flex: .04 1 auto;
     align-items: center;
     justify-content: end;
-    padding-right: 2dvw;
-    font-size: 16dvh;
+    padding: 0 2dvw;
+    font-size: 15dvh;
     font-weight: lighter;
     font-family: helvetica;
+    flex-wrap: wrap;
+}
+
+#displaySubContainer {
+    min-height: 157px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
 }
 
 #buttons {
-    flex: 1 1 auto;
+    flex: .9 1 auto;
+    max-height: 646px;
     display: flex;
     flex-direction: column;
 }
