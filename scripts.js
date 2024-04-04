@@ -1,6 +1,4 @@
 /* 
-TODO: NUM WITH NO OP MAKES UNDEFINED
-
 TODO : 9 / posOrNeg .  <--- reacts differently than iphone, misses the 0.
 
 !!! CHECK PHONE VIDS FOR SHIT
@@ -146,13 +144,16 @@ function runEqualsLogic() {
         }
         operant = calculate(operator, operant, result);
         setDisplay(operant);
-
+        
     // All other functionality
     } else if (operant !== null && operator && input.length !== 0) {
         result = storeInputAsNumTo(result);
         clearInput();
         operant = calculate(operator, operant, result);
         setDisplay(operant);
+    // If EVERYTHING is null
+    } else if ((operator == null && operatorQueue == null && operant == null && result == null)){
+        setDisplay(input.join(``));
     } else {
         result = storeInputAsNumTo(result);
         clearInput();
@@ -166,7 +167,7 @@ function runEqualsLogic() {
 function runNumberClickLogic() {
     highlightOperator();
 
-    if (previousClick[0] == `=`) {
+    if ((previousClick[0] == `=`) && operator || operatorQueue) {
         operant = storeInputAsNumTo(operant);
         clearInput();
         setDisplay(operant); 
