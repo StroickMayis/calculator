@@ -1,6 +1,4 @@
 /* 
-TODO : FIX THE ZERO BUTTON
-
 TODO: NUM WITH NO OP MAKES UNDEFINED
 
 TODO : 9 / posOrNeg .  <--- reacts differently than iphone, misses the 0.
@@ -360,7 +358,7 @@ function checkPosOrNeg() {
 }
 
 function updatePreviousClick(eventTarget) {
-    if (eventTarget.className.includes(`num`)) {
+    if (eventTarget.className.includes(`num`) || eventTarget.className.includes(`zeroNum`)) {
         previousClick.push(`num`);
     } else {
         switch (eventTarget.id) {
@@ -437,13 +435,23 @@ buttons.addEventListener(`click`, (e) => {
         case `nineButton`:
             input.push(9);
         break;
+        case `zeroButtonDiv`:
+            if (!(input[0] === 0) && input.includes(`.`)){
+                input.push(0);
+            }
+        break;
         case `zeroButton`:
-            input.push(0);
+            if (!(input[0] === 0) && input.includes(`.`)){
+                input.push(0);
+            }
         break;
         case `dotButton`:
-            if ( ! input.includes(`.`) ) {
+            if ( !(input.includes(`.`)) && (input.length == 0)) {
+                input.push(`0`);
                 input.push(`.`);
-            }
+            } else if ( ! input.includes(`.`) ) {
+                input.push(`.`);
+            } 
         break;
 
         case `divideButton`:
@@ -477,11 +485,11 @@ buttons.addEventListener(`click`, (e) => {
         clearCalculator();
     } else {
         updatePreviousClick(e.target);
-        // console.log(`PREVIOUS CLICK : ${previousClick[0]}`);
-        // console.log(` --- BUTTON CLICKED ---> ${e.target.id}`);
-        // logAllVars(true);
+        console.log(`PREVIOUS CLICK : ${previousClick[0]}`);
+        console.log(` --- BUTTON CLICKED ---> ${e.target.id}`);
+        logAllVars(true);
         checkPosOrNeg();
-        if (e.target.className.includes(`num`)) {
+        if (e.target.className.includes(`num`) || e.target.className.includes(`zeroNum`)) {
             runNumberClickLogic();
         } else if (equalsClicked) {
             runEqualsLogic();
@@ -492,7 +500,7 @@ buttons.addEventListener(`click`, (e) => {
         if (!display.textContent) {
             setDisplay(0);
         }
-        // logAllVars(false); 
+        logAllVars(false); 
     }
     if (input.length > 0 || result || operator) {
         console.log(input.length);
