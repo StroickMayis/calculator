@@ -447,7 +447,7 @@ buttons.addEventListener(`click`, (e) => {
             }
         break;
         case `dotButton`:
-            if ( !(input.includes(`.`)) && (input.length == 0)) {
+            if ( (!(input.includes(`.`)) && (input.length == 0)) || (!(input.includes(`.`)) && (input[0] == `-`))) {
                 input.push(`0`);
                 input.push(`.`);
             } else if ( ! input.includes(`.`) ) {
