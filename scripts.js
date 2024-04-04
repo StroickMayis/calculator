@@ -1,5 +1,5 @@
 /* 
-TODO : -5 X 0.8 = -4 then trying to percent it doesnt work.
+
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
