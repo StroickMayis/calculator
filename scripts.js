@@ -319,7 +319,6 @@ percentButton.addEventListener(`click`, () => {
         equalsButton.dispatchEvent(clickEvent)
 });
 
-
 buttons.addEventListener(`click`, (e) => {
     switch (e.target.id) {
         case `oneButton`:

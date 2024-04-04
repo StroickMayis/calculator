@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: rgb(30,30,30);
+    background-color: rgb(0,0,0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,25 +14,27 @@ body {
 }
 
 .container {
-    border: 2px solid white;
+    /* border: 2px solid white; */
     display: flex;
     flex-direction: column;
-    width: 50dvh;
-    height: 75dvh;
+    width: 56.2dvh;
+    height: 90dvh;
     text-align: center;
 }
 
-.container div{
+/* .container div{
     border: 2px solid white;
-}
+} */
 
 #display {
     display: flex;
-    flex: .25 1 auto;
+    flex: .04 1 auto;
     align-items: center;
     justify-content: end;
     padding-right: 2dvw;
-    font-size: 6dvh;
+    font-size: 16dvh;
+    font-weight: lighter;
+    font-family: helvetica;
 }
 
 #buttons {
@@ -54,8 +56,80 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 7dvh;
+    font-weight: 400;
+    font-family: Helvetica;
 }
 
 #zeroButton {
-    flex: 2 1 auto;
+    flex: 1.55 1 auto;
+    border-radius: 250px;
+    display: flex;
+    justify-content: left;
+}
+
+#zeroButton div{
+    justify-content: left;
+    margin-left: 6dvh;
+}
+
+.row .num {
+    background-color: rgb(51,51,51) ;
+    border-radius: 50%;
+    border: 1dvh solid black;
+    font-size: 6dvh;
+}
+
+#posOrNegButton {
+    background-color: rgb(165,165,165);
+    color: black;
+    border-radius: 50%;
+    border: 1dvh solid black;
+    font-size: 6dvh;
+}
+
+#clearButton {
+    background-color: rgb(165,165,165);
+    color: black;
+    border-radius: 50%;
+    border: 1dvh solid black;
+    font-size: 6dvh;
+}
+
+#percentButton {
+    background-color: rgb(165,165,165);
+    color: black;
+    border-radius: 50%;
+    border: 1dvh solid black;
+    font-size: 6dvh;
+}
+
+#divideButton {
+    background-color: rgb(255,159,10);
+    border-radius: 50%;
+    border: 1dvh solid black;
+}
+
+#multiplyButton {
+    background-color: rgb(255,159,10);
+    border-radius: 50%;
+    border: 1dvh solid black;
+}
+
+#subtractButton {
+    background-color: rgb(255,159,10);
+    border-radius: 50%;
+    border: 1dvh solid black;
+}
+
+#addButton {
+    background-color: rgb(255,159,10);
+    border-radius: 50%;
+    border: 1dvh solid black;
+}
+
+#equalsButton {
+    background-color: rgb(255,159,10);
+    border-radius: 50%;
+    border: 1dvh solid black;
 }
