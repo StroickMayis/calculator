@@ -1,7 +1,5 @@
 /* 
-TODO : 9 / posOrNeg .  <--- reacts differently than iphone, misses the 0.
-
-!!! CHECK PHONE VIDS FOR SHIT
+TODO : commas not workingright, adding to the end when there is a negative sign
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
@@ -167,7 +165,8 @@ function runEqualsLogic() {
 function runNumberClickLogic() {
     highlightOperator();
 
-    if ((previousClick[0] == `=`) && operator || operatorQueue) {
+    if ((previousClick[0] == `=`) && (operator || operatorQueue) && (input[0] !== `0`) && (!posOrNeg)) {
+        console.log(`-------------------------------------------1`); // !!! DEBUGGER LOG !!!
         operant = storeInputAsNumTo(operant);
         clearInput();
         setDisplay(operant); 
