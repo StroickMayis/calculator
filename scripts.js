@@ -1,5 +1,5 @@
 /* 
-TODO : commas not workingright, adding to the end when there is a negative sign
+TODO : Nothing yet.
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
@@ -76,6 +76,7 @@ function clearOperators() {
 
 function setDisplay(x) {
     let indexCounter;
+    let wasNegative = false;
     // *CONVERTS TO STRING
     if (typeof x !== `string`) {
         x = `${x}`;
@@ -89,6 +90,13 @@ function setDisplay(x) {
 
     // *SPLICES IN COMMAS FOR BIG NUMBERS
     x = x.split(``);
+        // *TAKES OUT `-` NEGATIVE SIGN AND ADDS BACK IN AFTER COMMAS ARE ADDED
+    if (x.includes(`-`)) {
+        wasNegative = true;
+        x.shift();
+    }
+
+
     if (x.length > 3 && !x.includes(`e`)) {
         if (x.includes(`.`)){
             indexCounter = x.indexOf(`.`);
@@ -104,6 +112,11 @@ function setDisplay(x) {
             }
         }   
     }
+
+    if (wasNegative) {
+        x.splice(0,0,`-`);
+    }
+
     // *CHANGES FONT SIZE FOR BIG NUMBERS
     if (x.length > 6) {
         switch (x.length) {
