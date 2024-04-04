@@ -1,5 +1,5 @@
 /* 
-TODO : Nothing yet.
+TODO : -5 X 0.8 = -4 then trying to percent it doesnt work.
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
@@ -449,12 +449,16 @@ buttons.addEventListener(`click`, (e) => {
             input.push(9);
         break;
         case `zeroButtonDiv`:
-            if (!(input[0] === 0) && input.includes(`.`)){
+            if (input.includes(`.`)){
+                input.push(0);
+            } else if (!(input[0] === 0) && input.length > 0){
                 input.push(0);
             }
         break;
         case `zeroButton`:
-            if (!(input[0] === 0) && input.includes(`.`)){
+            if (input.includes(`.`)){
+                input.push(0);
+            } else if (!(input[0] === 0) && input.length > 0){
                 input.push(0);
             }
         break;
