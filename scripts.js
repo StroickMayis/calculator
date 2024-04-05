@@ -31,23 +31,30 @@ function expo(x, f) {
 }
 
 function calculate(operator, a, b) {
-        switch (operator) {
-            case "/":
-                if (b == 0) {
-                    return `Stop trying to crash my calculator...`;
-                }
+
+    switch (operator) {
+        case "/":
+            if (b == 0) {
+                return "∞";
+            }
+            else if (a != 0 && b == 0) {
+                console.log("error debugging")
+            }
+            else {
                 return a / b;
+            }
             break;
-            case "*":
-                return a * b;
+        case "*":
+            return a * b;
             break;
-            case "-":
-                return a - b;
+        case "-":
+            console.log("subtracted")
+            return a - b;
             break;
-            case "+":
-                return a + b;
+        case "+":
+            return a + b;
             break;
-        }
+    }
 }
 
 function clearInput() {
@@ -61,7 +68,7 @@ function arrOfStrToNum(array) {
 }
 
 function storeInputAsNumTo(destination) {
-    if (input !== 0) {
+    if (input) {
         destination = input;
         destination = arrOfStrToNum(destination);
         return destination;
@@ -90,7 +97,7 @@ function setDisplay(x) {
 
     // *SPLICES IN COMMAS FOR BIG NUMBERS
     x = x.split(``);
-        // *TAKES OUT `-` NEGATIVE SIGN AND ADDS BACK IN AFTER COMMAS ARE ADDED
+    // *TAKES OUT `-` NEGATIVE SIGN AND ADDS BACK IN AFTER COMMAS ARE ADDED
     if (x.includes(`-`)) {
         wasNegative = true;
         x.shift();
@@ -98,23 +105,23 @@ function setDisplay(x) {
 
 
     if (x.length > 3 && !x.includes(`e`)) {
-        if (x.includes(`.`)){
+        if (x.includes(`.`)) {
             indexCounter = x.indexOf(`.`);
             while (indexCounter > 3) {
                 indexCounter -= 3;
-                x.splice(indexCounter,0,`,`);
-            } 
+                x.splice(indexCounter, 0, `,`);
+            }
         } else {
             indexCounter = x.length;
             while (indexCounter > 3) {
                 indexCounter -= 3;
-                x.splice(indexCounter,0,`,`);
+                x.splice(indexCounter, 0, `,`);
             }
-        }   
+        }
     }
 
     if (wasNegative) {
-        x.splice(0,0,`-`);
+        x.splice(0, 0, `-`);
     }
 
     // *CHANGES FONT SIZE FOR BIG NUMBERS
@@ -122,16 +129,16 @@ function setDisplay(x) {
         switch (x.length) {
             case 7:
                 display.style.fontSize = `13.5dvh`;
-            break;
+                break;
             case 8:
                 display.style.fontSize = `11.75dvh`;
-            break;
+                break;
             case 9:
                 display.style.fontSize = `10.5dvh`;
-            break;
+                break;
             default:
                 display.style.fontSize = `9dvh`;
-            break;
+                break;
         }
     } else {
         display.style.fontSize = `15dvh`;
@@ -148,22 +155,28 @@ function runEqualsLogic() {
     if ((operator || operatorQueue) && (input.length == 0 && operant == null && result == null)) {
         display.textContent = `ERROR`;
 
-    // Equals functionality if you keep pressing it over and over again
-    } else if ((!(result !== null && operatorQueue) && input.length == 0) && (operant  !== null && operator !== null )) {
+        // Equals functionality if you keep pressing it over and over again
+    } else if ((!(result !== null && operatorQueue) && input.length == 0) && (operant !== null && operator !== null)) {
         if (!result) {
-            result = operant;
+            console.log("operant is initially ", operant)
+            console.log("result is initially ", result)
+            console.log("dividing things, ", operator, operant, result)
+            // console.log("experimenting)
+            result = 0;
+            console.log("result is secondly :", result)
         }
         operant = calculate(operator, operant, result);
+        console.log("operant is  finally-----", operant)
         setDisplay(operant);
-        
-    // All other functionality
+
+        // All other functionality
     } else if (operant !== null && operator && input.length !== 0) {
         result = storeInputAsNumTo(result);
         clearInput();
         operant = calculate(operator, operant, result);
         setDisplay(operant);
-    // If EVERYTHING is null
-    } else if ((operator == null && operatorQueue == null && operant == null && result == null)){
+        // If EVERYTHING is null
+    } else if ((operator == null && operatorQueue == null && operant == null && result == null)) {
         setDisplay(input.join(``));
     } else {
         result = storeInputAsNumTo(result);
@@ -182,33 +195,33 @@ function runNumberClickLogic() {
         console.log(`-------------------------------------------1`); // !!! DEBUGGER LOG !!!
         operant = storeInputAsNumTo(operant);
         clearInput();
-        setDisplay(operant); 
+        setDisplay(operant);
     } else {
         if (posOrNeg) {
             if (input.length == 0 && operant !== null && result !== null && !posOrNegAfterOpSwitch) {
                 operant *= -1;
                 setDisplay(operant);
-            } else if (input.length == 0 && operant !== null && result !== null ) {
+            } else if (input.length == 0 && operant !== null && result !== null) {
                 if (input[0] !== "-") {
-                    input.splice(0,0,"-")
+                    input.splice(0, 0, "-")
                 } else {
                     input.shift();
                 }
                 if (input.length == 0 || (input.length == 1 && input.includes(`-`))) {
                     setDisplay(`${input.join(``)}0`);
                 } else {
-                    setDisplay(input.join(``)); 
+                    setDisplay(input.join(``));
                 }
             } else {
                 if (input[0] !== "-") {
-                    input.splice(0,0,"-")
+                    input.splice(0, 0, "-")
                 } else {
                     input.shift();
                 }
                 if (input.length == 0 || (input.length == 1 && input.includes(`-`))) {
                     setDisplay(`${input.join(``)}0`);
                 } else {
-                    setDisplay(input.join(``)); 
+                    setDisplay(input.join(``));
                 }
             }
             posOrNeg = false;
@@ -216,7 +229,7 @@ function runNumberClickLogic() {
             if (input.length == 0) {
                 setDisplay(`${input.join(``)}0`);
             } else {
-                setDisplay(input.join(``)); 
+                setDisplay(input.join(``));
             }
         }
     }
@@ -224,13 +237,14 @@ function runNumberClickLogic() {
 
 function runOperatorLogic() {
     if (operant !== null && result !== null && operator && operatorQueue && input.length !== 0) {
+        console.log(" operator login ran and the result in 239 is ", result)
         result = storeInputAsNumTo(result);
-        operant = calculate(operator, operant, result); 
+        operant = calculate(operator, operant, result);
         clearInput();
         result = null;
         queueNextOperator();
-        
-    } else if (operant !== null ) {
+
+    } else if (operant !== null) {
 
         // Triggers if input has something in it
         if (input.length !== 0) {
@@ -240,7 +254,7 @@ function runOperatorLogic() {
             operant = calculate(operator, operant, result);
             queueNextOperator();
 
-        // Triggers if no input    
+            // Triggers if no input    
         } else {
             if (operatorQueue && operator) {
                 queueNextOperator();
@@ -252,7 +266,7 @@ function runOperatorLogic() {
         operant = storeInputAsNumTo(operant);
         clearInput();
         queueNextOperator();
-    }  
+    }
     setDisplay(operant);
 }
 
@@ -276,25 +290,25 @@ function clearCalculator() {
 function logAllVars(beforeCalc) {
     if (beforeCalc) {
         opCount++;
-        console.log(`OPERATION #: ${opCount} (BEFORE CALC)`);
-        console.log(` `);
-        console.log(`OPERANT : ${operant}`);
-        console.log(`RESULT : ${result}`);
-        console.log(`INPUT: ${input}`);
-        console.log(`OPERATOR: ${operator}`);
-        console.log(`OPERATOR QUEUE: ${operatorQueue}`);
-        console.log(`EQUALS CLICKED?: ${equalsClicked}`);
-        console.log(` `);
+        // console.log(`OPERATION #: ${opCount} (BEFORE CALC)`);
+        // console.log(` `);
+        // console.log(`OPERANT : ${operant}`);
+        // console.log(`RESULT : ${result}`);
+        // console.log(`INPUT: ${input}`);
+        // console.log(`OPERATOR: ${operator}`);
+        // console.log(`OPERATOR QUEUE: ${operatorQueue}`);
+        // console.log(`EQUALS CLICKED?: ${equalsClicked}`);
+        // console.log(` `);
     } else {
-        console.log(`OPERATION #: ${opCount} (AFTER CALC)`);
-        console.log(` `);
-        console.log(`OPERANT: ${operant}`);
-        console.log(`RESULT: ${result}`);
-        console.log(`INPUT: ${input}`);
-        console.log(`OPERATOR: ${operator}`);
-        console.log(`OPERATOR QUEUE: ${operatorQueue}`);
-        console.log(`EQUALS CLICKED?: ${equalsClicked}`);
-        console.log(` `);
+        // console.log(`OPERATION #: ${opCount} (AFTER CALC)`);
+        // console.log(` `);
+        // console.log(`OPERANT: ${operant}`);
+        // console.log(`RESULT: ${result}`);
+        // console.log(`INPUT: ${input}`);
+        // console.log(`OPERATOR: ${operator}`);
+        // console.log(`OPERATOR QUEUE: ${operatorQueue}`);
+        // console.log(`EQUALS CLICKED?: ${equalsClicked}`);
+        // console.log(` `);
     }
 }
 
@@ -314,7 +328,7 @@ function highlightOperator(localOperator = null) {
             divideButton.style.backgroundColor = null;
             multiplyButton.style.backgroundColor = null;
             subtractButton.style.backgroundColor = null;
-        break;
+            break;
         case "/":
             divideButton.style.backgroundColor = `rgb(255,255,255)`;
             divideButton.style.color = `rgb(255,159,10)`;
@@ -325,8 +339,8 @@ function highlightOperator(localOperator = null) {
             multiplyButton.style.color = null;
             subtractButton.style.backgroundColor = null;
             subtractButton.style.color = null;
-            
-        break;
+
+            break;
         case "*":
             multiplyButton.style.backgroundColor = `rgb(255,255,255)`;
             multiplyButton.style.color = `rgb(255,159,10)`;
@@ -337,8 +351,8 @@ function highlightOperator(localOperator = null) {
             divideButton.style.color = null;
             subtractButton.style.backgroundColor = null;
             subtractButton.style.color = null;
-            
-        break;
+
+            break;
         case "-":
             subtractButton.style.backgroundColor = `rgb(255,255,255)`;
             subtractButton.style.color = `rgb(255,159,10)`;
@@ -349,7 +363,7 @@ function highlightOperator(localOperator = null) {
             divideButton.style.color = null;
             multiplyButton.style.backgroundColor = null;
             multiplyButton.style.color = null;
-        break;
+            break;
         case "+":
             addButton.style.backgroundColor = `rgb(255,255,255)`;
             addButton.style.color = `rgb(255,159,10)`;
@@ -360,7 +374,7 @@ function highlightOperator(localOperator = null) {
             multiplyButton.style.color = null;
             subtractButton.style.backgroundColor = null;
             subtractButton.style.color = null;
-        break;
+            break;
     }
 }
 
@@ -377,25 +391,25 @@ function updatePreviousClick(eventTarget) {
         switch (eventTarget.id) {
             case `divideButton`:
                 previousClick.push(`/`);
-            break;
+                break;
             case `multiplyButton`:
                 previousClick.push(`*`);
-            break;
+                break;
             case `subtractButton`:
                 previousClick.push(`-`);
-            break;
+                break;
             case `addButton`:
                 previousClick.push(`+`);
-            break;
+                break;
             case `equalsButton`:
                 previousClick.push(`=`);
-            break;
+                break;
             case `clearButton`:
                 previousClick.push(`clear`);
-            break;
+                break;
             case `posOrNegButton`:
                 previousClick.push(`posOrNeg`);
-            break;
+                break;
         }
     }
     if (previousClick.length > 2) {
@@ -404,98 +418,101 @@ function updatePreviousClick(eventTarget) {
 }
 
 // *This is for the Percent Button, it clicks out "input /100 = to" by hand, this was my lazy solution.
-const clickEvent = new MouseEvent(`click` , {bubbles:true,cancelable:true,view:window});
+const clickEvent = new MouseEvent(`click`, { bubbles: true, cancelable: true, view: window });
 percentButton.addEventListener(`click`, () => {
-        divideButton.dispatchEvent(clickEvent)
-        oneButton.dispatchEvent(clickEvent)
-        zeroButton.dispatchEvent(clickEvent)
-        zeroButton.dispatchEvent(clickEvent)
-        equalsButton.dispatchEvent(clickEvent)
+    divideButton.dispatchEvent(clickEvent)
+    oneButton.dispatchEvent(clickEvent)
+    zeroButton.dispatchEvent(clickEvent)
+    zeroButton.dispatchEvent(clickEvent)
+    equalsButton.dispatchEvent(clickEvent)
 });
 
-buttons.addEventListener("mousedown", (e) => 
-{
+buttons.addEventListener("mousedown", (e) => {
     e.preventDefault();
 });
 
 buttons.addEventListener(`click`, (e) => {
-    
+
     switch (e.target.id) {
         case `oneButton`:
             input.push(1);
-        break;
+            break;
         case `twoButton`:
             input.push(2);
-        break;
+            break;
         case `threeButton`:
             input.push(3);
-        break;
+            break;
         case `fourButton`:
             input.push(4);
-        break;
+            break;
         case `fiveButton`:
             input.push(5);
-        break;
+            break;
         case `sixButton`:
             input.push(6);
-        break;
+            break;
         case `sevenButton`:
             input.push(7);
-        break;
+            break;
         case `eightButton`:
             input.push(8);
-        break;
+            break;
         case `nineButton`:
             input.push(9);
-        break;
+            break;
         case `zeroButtonDiv`:
-            if (input.includes(`.`)){
+            if (input.includes(`.`)) {
                 input.push(0);
-            } else if (!(input[0] === 0) && input.length > 0){
+            } else if (!(input[0] === 0) && input.length > 0) {
                 input.push(0);
             }
-        break;
+            else if (input.length < 1) {
+                input.push(0)
+                console.log("single zero pushed")
+            }
+            break;
         case `zeroButton`:
-            if (input.includes(`.`)){
+            if (input.includes(`.`)) {
                 input.push(0);
-            } else if (!(input[0] === 0) && input.length > 0){
+            } else if (!(input[0] === 0) && input.length > 0) {
                 input.push(0);
             }
-        break;
+            break;
         case `dotButton`:
-            if ( (!(input.includes(`.`)) && (input.length == 0)) || (!(input.includes(`.`)) && (input[0] == `-`))) {
+            if ((!(input.includes(`.`)) && (input.length == 0)) || (!(input.includes(`.`)) && (input[0] == `-`))) {
                 input.push(`0`);
                 input.push(`.`);
-            } else if ( ! input.includes(`.`) ) {
+            } else if (!input.includes(`.`)) {
                 input.push(`.`);
-            } 
-        break;
+            }
+            break;
 
         case `divideButton`:
-            operatorQueue =`/`;
+            operatorQueue = `/`;
             highlightOperator(`/`);
-        break;
+            break;
         case `multiplyButton`:
-            operatorQueue =`*`;
+            operatorQueue = `*`;
             highlightOperator(`*`);
-        break;
+            break;
         case `subtractButton`:
-            operatorQueue =`-`;
+            operatorQueue = `-`;
             highlightOperator(`-`);
-        break;
+            break;
         case `addButton`:
-            operatorQueue =`+`;
+            operatorQueue = `+`;
             highlightOperator(`+`);
-        break;
+            break;
         case `equalsButton`:
             equalsClicked = true;
-        break;
+            break;
         case `clearButton`:
             clearClicked = true;
-        break;
+            break;
         case `posOrNegButton`:
             posOrNeg = true;
-        break;
+            break;
     }
 
     if (clearClicked) {
@@ -513,11 +530,11 @@ buttons.addEventListener(`click`, (e) => {
         } else if (operatorQueue) {
             runOperatorLogic();
         }
- 
+
         if (!display.textContent) {
             setDisplay(0);
         }
-        logAllVars(false); 
+        logAllVars(false);
     }
     if (input.length > 0 || result || operator) {
         console.log(input.length);
