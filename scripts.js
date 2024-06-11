@@ -1,5 +1,7 @@
 /* 
+TODO : fix infinity commas 
 
+TODO : Zero Button size
 */
 const buttons = document.querySelector(`#buttons`);
 const display = document.querySelector(`#display`);
